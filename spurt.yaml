@@ -14,3 +14,13 @@
      - name: installing nodejs
        command:
          cmd: "sudo apt install nodejs"
+     - name: installing build-essential
+       apt:
+         name: build-essential
+     - name: installing nodejs libraries
+       npm:
+         name: "{{ item }}"
+         global: yes
+       loop: 
+         - forever  
+         - apidoc  
