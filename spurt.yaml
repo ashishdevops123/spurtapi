@@ -28,3 +28,15 @@
        apt:
          name: apache2
          update_cache: yes    
+     - name: Enable the Apache2 modules
+       apache2_module:
+         name: proxy
+         state: present
+     - name: Enable the Apache2 modules
+       apache2_module:
+         name: proxy_http
+         state: present
+     - name: Enable the Apache2 modules
+       apache2_module:
+         name: headers
+         state: present
