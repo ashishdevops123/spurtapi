@@ -89,5 +89,20 @@
          dest: /home/devops
          clone: yes
          recursive: yes
+     - name: apache2 reverse proxy
+       template: 
+         dest: /etc/apache2/sites-available/000-default.conf
+         src: apacheproxy.j2
+       notify: restarting apache2
+
+   handlers: 
+     - name: restarting apache2
+       ansible.builtin.systemd:
+         name: apache2.service
+         daemon_reload: yes
+         enabled: yes
+         state: restarted
+     
+         
 
           
