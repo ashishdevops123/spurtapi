@@ -45,3 +45,11 @@
          name: apache2
          daemon_reload: yes
          state: restarted
+     - name: installing mysql
+       apt:
+         name: mysql-server
+         state: present
+     - name: starting mysql-server
+       ansible.builtin.systemd:
+         name: mysql.service
+         state: started
