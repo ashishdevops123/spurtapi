@@ -3,6 +3,8 @@
    become: yes
    hosts: all
    vars:
+     - image_magick: imagemagick
+     - angular_package: '@angular/cli'
       
      
    tasks:
@@ -68,3 +70,11 @@
        ansible.builtin.systemd:
          name: mysql.service
          state: started
+     - name: installing imagemagick
+       apt:
+         name: "{{ image_magick }}"
+         state: present
+     - name: installing angular
+       apt:
+         name: "{{ angular_package }}"
+         state: present
