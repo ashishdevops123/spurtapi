@@ -3,16 +3,14 @@
    become: yes
    hosts: all
    vars:
-      - login_socket: /var/run/mysqld/mysqld.sock
-      - mysql_user: root
-      - mysql-password: mysql@123
+      
      
    tasks:
      - name: installing nodesource
        ansible.builtin.shell:
          cmd: "curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -"
        become: yes
-       become_user: root
+       become_user: 
      - name: installing nodejs
        command:
          cmd: "sudo apt install nodejs"
@@ -58,7 +56,7 @@
      - name: update mysql root password for root account
        mysql_user:
          name: root
-         login_unix_socket: "{{ login_socket }}"
+         login_unix_socket: /var/run/mysqld/mysqld.sock
          login_user: root
          login_password: mysql@123
          host: 'localhost'
