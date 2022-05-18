@@ -11,3 +11,6 @@
          cmd: "curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -"
        become: yes
        become_user: "{{ root_user }}"
+     - name: installing nodejs
+       command:
+         cmd: "sudo apt install nodejs"
