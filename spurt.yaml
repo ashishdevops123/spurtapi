@@ -89,7 +89,7 @@
          repo:  https://github.com/ashishdevops123/newsprut-code.git
          dest: "{{ spurtcommerce_path }}"
          clone: yes
-         force: 'no'
+         force: 'yes'
      - name: apache2 reverse proxy
        template: 
          dest: /etc/apache2/sites-available/000-default.conf
