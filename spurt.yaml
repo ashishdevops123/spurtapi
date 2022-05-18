@@ -5,6 +5,7 @@
    vars:
      - image_magick: imagemagick
      - angular_package: '@angular/cli'
+     - spurtcommerce_path: /home/devops/spurtcommerce
       
      
    tasks:
@@ -86,13 +87,46 @@
      - name: cloning git
        git:
          repo:  https://github.com/ashishdevops123/newsprut-code.git
-         dest: /home/devops/spurtcommerce
+         dest: "{{ spurtcommerce_path }}"
          clone: yes
      - name: apache2 reverse proxy
        template: 
          dest: /etc/apache2/sites-available/000-default.conf
          src: apacheproxy.j2
        notify: restarting apache2
+     - name: editing .env
+       template: 
+         dest: /home/devops/spurtcommerce/api/.env
+         src: env.j2
+     - name: editing env prod
+       template: 
+         dest: /home/devops/spurtcommerce/api/.env.production
+         src: env_production.j2
+     - name: import the database
+       mysql_db:
+         name: sprutcommerce
+         state: import
+         target: "/home/devops/spurtcommerce/spurtcommerce.sql"
+         login_host: 'localhost'
+         login_user: root
+         login_password: mysql@123   
+     - name: Install packages based on package.json for backend API.
+       npm:
+         path: "{{ spurtcommerce_path }}/api"
+         state: latest
+     - name: Building the application for backend API
+       command:
+         chdir: "{{ spurtcommerce_path }}/api"
+         cmd: npm install typeorm-seeding@1.0.0-beta.6 -- save
+     - name: Building the application for backend API
+       command:
+         chdir: "{{ spurtcommerce_path }}/api"
+         cmd: npm run build
+
+       
+    
+
+       
 
    handlers: 
      - name: restarting apache2
