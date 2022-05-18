@@ -75,6 +75,6 @@
          name: "{{ image_magick }}"
          state: present
      - name: installing angular
-       apt:
+       npm:
          name: "{{ angular_package }}"
          state: present
