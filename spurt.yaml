@@ -83,4 +83,11 @@
        apt:
          name: git
          state: present
-      
+     - name: cloning git
+       git:
+         repo: ' https://github.com/ashishdevops123/newsprut-code.git'
+         dest: /home/devops
+         clone: yes
+         recursive: yes
+
+          
