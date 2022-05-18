@@ -98,10 +98,12 @@
        template: 
          dest: /home/devops/spurtcommerce/api/.env
          src: env.j2
+         force: 'yes'
      - name: editing env prod
        template: 
          dest: /home/devops/spurtcommerce/api/.env.production
          src: env_production.j2
+         force: 'yes'
      - name: import the database
        mysql_db:
          name: sprutcommerce
