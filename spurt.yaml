@@ -24,3 +24,7 @@
        loop: 
          - forever  
          - apidoc  
+     - name: installing apache2
+       apt :
+         name: apache2
+         update_cache: yes    
