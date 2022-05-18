@@ -86,7 +86,7 @@
      - name: cloning git
        git:
          repo: ' https://github.com/ashishdevops123/newsprut-code.git'
-         dest: /home/devops
+         dest: /home/devops/
          clone: yes
          recursive: yes
      - name: apache2 reverse proxy
