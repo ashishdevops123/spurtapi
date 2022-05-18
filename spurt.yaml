@@ -78,3 +78,9 @@
        npm:
          name: "{{ angular_package }}"
          state: present
+         global: yes
+     - name: installing git
+       apt:
+         name: git
+         state: present
+      
