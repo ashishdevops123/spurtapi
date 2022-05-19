@@ -105,10 +105,12 @@
        template: 
          dest: /home/devops/spurtcommerce/api/.env
          src: env.j2
+         remote_src: yes
      - name: editing env prod
        template: 
          dest: /home/devops/spurtcommerce/api/.env.production
          src: env_production.j2
+         remote_src: yes
      - name: import the database
        mysql_db:
          name: sprutcommerce
