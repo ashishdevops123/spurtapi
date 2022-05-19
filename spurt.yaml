@@ -5,7 +5,7 @@
    vars:
      - image_magick: imagemagick
      - angular_package: '@angular/cli'
-     - spurtcommerce_path: /home/devops/spurtcommerce
+     - spurtcommerce_path: /home/devops/spurtcommerces
       
      
    tasks:
