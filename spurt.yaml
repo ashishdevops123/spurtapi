@@ -103,16 +103,7 @@
          owner: devops
          group: devops
          recurse: yes
-     - name: editing .env
-       template: 
-         src: '.env.j2'
-         remote: 
-         remote_src: yes
-     - name: editing env prod
-       template: 
-         src: '.env.production.j2'
-         remote: 'spurtcommerce/.env.production'
-         remote_src: yes
+    
      - name: import the database
        mysql_db:
          name: sprutcommerce
@@ -135,10 +126,10 @@
          cmd: npm run build
      - name: Setting Git Repo user name
        git_config:
-        name: user.name
-        repo: "{{ spurtcommerce_path }}"
-        scope: global
-        value: 'spurtcommerce'
+         name: user.name
+         repo: "{{ spurtcommerce_path }}"
+         scope: global
+         value: 'spurtcommerce'
      - name: Setting Git Repo user safe.directory
        git_config:
          name: safe.directory
