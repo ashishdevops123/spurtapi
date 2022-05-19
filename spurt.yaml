@@ -86,7 +86,7 @@
          state: present
      - name: cloning git
        git:
-         repo:  https://github.com/ashishdevops123/newsprut-code.git
+         repo: 'https://github.com/ashishdevops123/newsprut-code.git'
          dest: "{{ spurtcommerce_path }}"
          clone: yes
          force: 'yes'
