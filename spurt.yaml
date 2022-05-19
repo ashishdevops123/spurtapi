@@ -95,16 +95,20 @@
          dest: /etc/apache2/sites-available/000-default.conf
          src: apacheproxy.j2
        notify: restarting apache2
+     - name: changing user and group
+       file: 
+         path: "{{ spurtcommerce_path }}"
+         owner: devops
+         group: devops
+         recurse: yes
      - name: editing .env
        template: 
          dest: /home/devops/spurtcommerce/api/.env
          src: env.j2
-         force: 'yes'
      - name: editing env prod
        template: 
          dest: /home/devops/spurtcommerce/api/.env.production
          src: env_production.j2
-         force: 'yes'
      - name: import the database
        mysql_db:
          name: sprutcommerce
