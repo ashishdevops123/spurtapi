@@ -86,7 +86,7 @@
          state: present
      - name: cloning git
        git:
-         repo: 'https://github.com/ashishdevops123/newsprut-code.git'
+         repo: 'https://github.com/Manojkumarpolaka/spurtcommerce.git'
          dest: "{{ spurtcommerce_path }}"
          clone: yes
          force: 'yes'
@@ -104,12 +104,12 @@
      - name: editing .env
        template: 
          src: '.env.j2'
-         remote: {{ spurtcommerce_path }}/api/.env
+         remote: '{{ spurtcommerce_path }}/api/.env'
          remote_src: yes
      - name: editing env prod
        template: 
          src: '.env.production.j2'
-         remote: {{ spurtcommerce_path }}/api/.env.production
+         remote: '{{ spurtcommerce_path }}/api/.env.production'
          remote_src: yes
      - name: import the database
        mysql_db:
