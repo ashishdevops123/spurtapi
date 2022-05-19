@@ -5,7 +5,9 @@
    vars:
      - image_magick: imagemagick
      - angular_package: '@angular/cli'
-     - spurtcommerce_path: /home/devops/spurtcommerces
+     - spurtcommerce_path: /home/devops/spurtcommerce
+     - spurt_repo: 'https://github.com/Manojkumarpolaka/spurtcommerce.git'
+     - spurt_version: 3.0.2
       
      
    tasks:
@@ -104,12 +106,12 @@
      - name: editing .env
        template: 
          src: '.env.j2'
-         remote: '{{ spurtcommerce_path }}/api/.env'
+         remote: 
          remote_src: yes
      - name: editing env prod
        template: 
          src: '.env.production.j2'
-         remote: '{{ spurtcommerce_path }}/api/.env.production'
+         remote: 'spurtcommerce/.env.production'
          remote_src: yes
      - name: import the database
        mysql_db:
@@ -131,6 +133,59 @@
        command:
          chdir: "{{ spurtcommerce_path }}/api"
          cmd: npm run build
+     - name: Setting Git Repo user name
+       git_config:
+        name: user.name
+        repo: "{{ spurtcommerce_path }}"
+        scope: global
+        value: 'spurtcommerce'
+     - name: Setting Git Repo user safe.directory
+       git_config:
+         name: safe.directory
+         repo: "{{ spurtcommerce_path }}"
+         scope: global
+     - name: Setting Git Repo user email
+       git_config:
+         name: user.email
+         repo: "{{ spurtcommerce_path }}"
+         scope: global
+         value: 'spurtcommerce@gmail.com'
+     - name: Downloading spurtcommerce
+       git:
+         repo: "{{ spurt_repo }}"
+         dest: "{{ spurtcommerce_path }}"
+         clone: yes
+     - name: Installing unzip
+       apt:
+         name: unzip
+         state: present
+     - name: Extracting spurtcommerce
+       unarchive: 
+         src: "{{ spurtcommerce_path }}/Spurtcommerce_{{spurt_version}}_community_LTS.zip"
+         dest: "{{ spurtcommerce_path }}"
+         remote_src: yes
+     - name: changing user and group
+       file: 
+         path: "{{ spurtcommerce_path }}"
+         owner: devops
+         group: devops
+         recurse: yes
+     - name: Adding DB username, password and database in .env
+       template:
+         src: '.env.j2'
+         dest: 'spurtcommerce/Spurtcommerce_{{spurt_version}}_community_LTS/api/.env'
+     - name: Adding DB username, password and database in .env.production 
+       template:
+         src: '.env.production.j2'
+         dest: 'spurtcommerce/Spurtcommerce_{{spurt_version}}_community_LTS/api/.env.production'
+     - name: Install packages based on package.json for backend API.
+       npm:
+         path: "{{ spurtcommerce_path }}/Spurtcommerce_{{spurt_version}}_community_LTS/api"
+         state: latest
+    - name: Building the application for backend API
+      command:
+        chdir: "{{ spurtcommerce_path }}/Spurtcommerce_{{spurt_version}}_community_LTS/api"
+        cmd: npm install typeorm-seeding@1.0.0-beta.6 -- save
 
        
     
